@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+//Change this StatefulWidget to StatelessWidget
+class Counter extends StatelessWidget {
+  final int counter;
+  final VoidCallback onIncrement;
+//Used For callback
+  const Counter({
+    super.key,
+    required this.counter,
+    required this.onIncrement,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: onIncrement, 
+          child: const Text('Increment'),
+        ),
+        const SizedBox(width: 16),
+        Text('Count: $counter'),
+      ],
+    );
+  }
+}
+//Update The Parent Widget
+class CountState extends StatefulWidget {
+  const CountState({super.key});
+//The Update UI Here
+  @override
+  _countParentState createState() => _countParentState();
+}
+
+class _countParentState extends State<CountState> {
+  int _count = 0;
+  void _incrementCounter() {
+    setState(() {
+      _count++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Counter(
+        counter: _count, 
+        onIncrement: _incrementCounter, 
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(
+    const MaterialApp(
+      home: Scaffold(
+        body: CountState(), 
+      ),
+    ),
+  );
+}
